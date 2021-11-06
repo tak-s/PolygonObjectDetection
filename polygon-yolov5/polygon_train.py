@@ -362,9 +362,11 @@ def train(hyp, opt, device, tb_writer=None, polygon=False):
                 wandb_logger.current_epoch = epoch + 1
                 if polygon: test = polygon_test
                 results, maps, _ = test.test(data_dict,
-                                             batch_size=batch_size * 2,
+                                             batch_size=1,
+                                             #batch_size=batch_size * 2,
                                              imgsz=imgsz_test,
                                              model=ema.ema,
+                                             conf_thres=0.1,
                                              single_cls=single_cls,
                                              dataloader=testloader,
                                              save_dir=save_dir,
@@ -431,9 +433,11 @@ def train(hyp, opt, device, tb_writer=None, polygon=False):
             if is_coco:  # COCO dataset
                 for m in [last, best] if best.exists() else [last]:  # speed, mAP tests
                     results, _, _ = test.test(opt.data,
-                                              batch_size=batch_size * 2,
+                                              batch_size=1,
+                                              #batch_size=batch_size * 2,
                                               imgsz=imgsz_test,
-                                              conf_thres=0.001,
+                                            #   conf_thres=0.001,
+                                              conf_thres=0.1,
                                               iou_thres=0.7,
                                               model=attempt_load(m, device).half(),
                                               single_cls=single_cls,
@@ -441,7 +445,8 @@ def train(hyp, opt, device, tb_writer=None, polygon=False):
                                               save_dir=save_dir,
                                               save_json=True,
                                               plots=False,
-                                              polygon=True)
+                                            #   polygon=True)
+                                              )
 
             # Strip optimizers
             for f in last, best:

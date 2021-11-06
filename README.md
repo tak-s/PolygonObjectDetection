@@ -208,3 +208,50 @@ cd .. && cd ..</pre>
 * [ultralytics/yolov5](https://github.com/ultralytics/yolov5)
 * [NVIDIA/retinanet-examples](https://github.com/NVIDIA/retinanet-examples)
 * [ming71/yolov3-polygon](https://github.com/ming71/yolov3-polygon)
+
+---
+
+## COCO train result
+
+For 1 GPU(RTX A5000)
+
+```bash
+# Convert MS COCO to polygon format
+python3 convert2polygon.py --input_dir path_to_coco --save
+```
+
+### YOLOv5-S
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 polygon_train.py --weights "polygon-yolov5s-ucas.pt" \
+    --cfg polygon_yolov5s_coco.yaml \
+    --data polygon_coco.yaml --hyp data/hyp.ucas.yaml --img-size 640 \
+    --epochs 300 --batch-size 40 --noautoanchor --polygon --name yolov5-s
+```
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 polygon_test.py --weights runs/train/yolov5-s/weights/polygon_best.pt \
+    --data polygon_coco.yaml  --img 640  --iou 0.65 --conf-thres 0.1 --task val --batch-size 40 \
+    --name yolov5-s 
+```
+
+### YOLOv5-L
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 polygon_train.py --weights "" \
+    --cfg polygon_yolov5l_coco.yaml \
+    --data polygon_coco.yaml --hyp data/hyp.ucas.yaml --img-size 640 \
+    --epochs 300 --batch-size 16 --noautoanchor --polygon --name yolov5-l
+```
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 polygon_test.py --weights runs/train/yolov5-l/weights/polygon_best.pt \
+    --data polygon_coco.yaml  --img 640  --iou 0.65 --conf-thres 0.1 --task val --batch-size 16 \
+    --name yolov5-l
+```
+
+| Model    | mAP@.5 | mAP@.5:.95 |
+|----------|--------|------------|
+| YOLOv5-S | 0.334 | 0.171 |
+| YOLOv5-L | 0.424 | 0.238 |
+

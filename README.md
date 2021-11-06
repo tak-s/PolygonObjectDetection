@@ -1,3 +1,6 @@
+This repository is forked from [PolygonObjectDetectin](https://github.com/XinzeLee/PolygonObjectDetection).  
+I added [MS COCO trained weights](#COCO).  
+
 # Polygon-Yolov5
 This repository is based on Ultralytics/yolov5, with adjustments to enable polygon prediction boxes.
 
@@ -210,6 +213,8 @@ cd .. && cd ..</pre>
 * [ming71/yolov3-polygon](https://github.com/ming71/yolov3-polygon)
 
 ---
+
+# COCO
 
 ## COCO train result
 

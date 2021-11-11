@@ -98,14 +98,16 @@ def seg2poly(dataset_path='', plot=True):
 
                     # if crowded, use bbox
                     else: 
-                        # x1, y1, x1, y2, x2, y2, x2, y1
-                        label = [catid_to_idx[object0['category_id']],
-                                 object0['bbox'][0], object0['bbox'][1], object0['bbox'][0], object0['bbox'][3],
-                                 object0['bbox'][2], object0['bbox'][3], object0['bbox'][2], object0['bbox'][0]] 
-
-                        label = normalize_anchors(label, img['height'], img['width'])[0] # normalize xyxyxyxy
-                        anno_txt.append(label)
-                        continue
+                        pts = object0['bbox']
+                        segments = []
+                        segments.append((pts[0], pts[1]))
+                        segments.append((pts[0], pts[3]))
+                        segments.append((pts[2], pts[1]))
+                        segments.append((pts[2], pts[3]))
+                        segments = [segments]
+                        if plot: 
+                            polygon_coords.append([])
+                            segment_coords.append([])
 
                     # iterate through each segmentation
                     for segment in segments:

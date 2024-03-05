@@ -30,3 +30,4 @@ pandas
 # Cython  # for pycocotools https://github.com/cocodataset/cocoapi/issues/172
 # pycocotools>=2.0  # COCO mAP
 thop  # FLOPs computation
+wheel>=0.38.0 # not directly required, pinned by Snyk to avoid a vulnerability
